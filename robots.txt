@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://kuniam68.github.io/Cardiology-/sitemap.xml
