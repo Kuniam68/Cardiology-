@@ -70,4 +70,8 @@ The frontend mode is **not server enforcement**. When ready, put the Turnstile *
 
 For confirmation emails that work when opened in a different browser, set the Supabase Confirm Signup email template link to `{{ .SiteURL }}signin.html?token_hash={{ .TokenHash }}&type=email` when Site URL ends with `/`. The sign-in page verifies the one-time token and removes it from the URL. Existing PKCE confirmation links remain supported. Set the recovery template similarly to `{{ .SiteURL }}reset-password.html?token_hash={{ .TokenHash }}&type=recovery`.
 
-Public project settings and the Turnstile site key are still blank. Contact delivery stays disabled until a real academy email is supplied. Live account, RLS and CAPTCHA enforcement tests require the actual project configuration.
+The Cardiobug project URL and public publishable key are configured. The Turnstile site key is still awaited. Contact delivery stays disabled until a real academy email is supplied. Live account, RLS and CAPTCHA enforcement tests require the actual project configuration.
+
+## Current Supabase connection
+
+The public frontend configuration now points to the existing Cardiobug project. Read-only checks confirmed that email signup and email verification are enabled; the course/progress tables have not been created yet. See [the post-publication activation guide](docs/SUPABASE_SETUP.md) for the schema/RLS and exact GitHub Pages email redirect settings. CAPTCHA enforcement has not been enabled.
