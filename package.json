@@ -1,1 +1,1 @@
-{"name":"pulse-academy","private":true,"type":"module","scripts":{"test":"node --test tests/*.test.mjs","check":"python3 scripts/check_site.py"}}
+{"name":"cardiobug","private":true,"type":"module","scripts":{"test":"node --test tests/*.test.mjs","check":"python3 scripts/check_site.py"}}
