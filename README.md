@@ -70,7 +70,7 @@ The frontend mode is **not server enforcement**. When ready, put the Turnstile *
 
 For confirmation emails that work when opened in a different browser, set the Supabase Confirm Signup email template link to `{{ .SiteURL }}signin.html?token_hash={{ .TokenHash }}&type=email` when Site URL ends with `/`. The sign-in page verifies the one-time token and removes it from the URL. Existing PKCE confirmation links remain supported. Set the recovery template similarly to `{{ .SiteURL }}reset-password.html?token_hash={{ .TokenHash }}&type=recovery`.
 
-The Cardiobug project URL and public publishable key are configured. The Turnstile site key is still awaited. Contact delivery stays disabled until a real academy email is supplied. Live account, RLS and CAPTCHA enforcement tests require the actual project configuration.
+The Cardiobug project URL and public publishable key are configured. The Turnstile public site key is configured, with mode kept optional for frontend testing. Contact delivery stays disabled until a real academy email is supplied. Live account, RLS and CAPTCHA enforcement tests require the actual project configuration.
 
 ## Current Supabase connection
 

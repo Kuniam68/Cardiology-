@@ -6,7 +6,7 @@ export const config = {
   contactEmail: '',
   // Enable only after the Google provider is configured in Supabase.
   googleSignIn: false,
-  turnstileSiteKey: '',
+  turnstileSiteKey: '0x4AAAAAAGEOAgSqIGZqRx5x',
   // off: no widget; optional: show/send tokens when available; required: require a token.
   // Leave optional until Supabase CAPTCHA enforcement is enabled and tested.
   turnstileMode: 'optional'

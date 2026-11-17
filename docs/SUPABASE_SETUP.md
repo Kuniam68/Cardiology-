@@ -42,7 +42,7 @@ The pages exchange these one-time tokens with Supabase and remove them from the 
 
 ## Turnstile
 
-The public Turnstile site key is still awaited. Once supplied, put it in `assets/config.js` as `turnstileSiteKey`. Allow `kuniam68.github.io` in Cloudflare's site settings. Keep `turnstileMode: 'optional'` while testing, and keep CAPTCHA enforcement **disabled in Supabase** as requested. No server-side authentication/CAPTCHA setting was changed by publishing the frontend.
+The public Turnstile site key is configured in `assets/config.js` as `turnstileSiteKey`. Allow `kuniam68.github.io` in Cloudflare's site settings. Keep `turnstileMode: 'optional'` while testing, and keep CAPTCHA enforcement **disabled in Supabase** as requested. No server-side authentication/CAPTCHA setting was changed by publishing the frontend.
 
 Relevant forms send available tokens for registration, password login, confirmation resend and password-reset email requests. Expired/consumed tokens are cleared. Updating the password uses the authenticated recovery session.
 
