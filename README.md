@@ -75,3 +75,7 @@ The Cardiobug project URL and public publishable key are configured. The Turnsti
 ## Current Supabase connection
 
 The public frontend configuration now points to the existing Cardiobug project. Read-only checks confirmed that email signup and email verification are enabled; the course/progress tables have not been created yet. See [the post-publication activation guide](docs/SUPABASE_SETUP.md) for the schema/RLS and exact GitHub Pages email redirect settings. CAPTCHA enforcement has not been enabled.
+
+## Password recovery update
+
+See [the password recovery fix and required Supabase email-template change](docs/PASSWORD_RECOVERY.md). Cross-browser recovery uses one-time token-hash links with an isolated, validated session; ordinary account sign-in remains on PKCE. Save the updated Reset Password template and request a fresh email before testing Android/iOS recovery.
