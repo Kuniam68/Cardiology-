@@ -2,7 +2,7 @@
 
 Production: `zeneffylfgiyezpegqto` / `Kuniam68/Cardiology-`.
 Website: https://kuniam68.github.io/Cardiology-/
-Working dummy-payment sandbox remains separate and unchanged.
+The existing dummy-payment journey remains separate. An official provider acceptance area is prepared at https://kuniam68.github.io/cardiobug-sandbox/gateway-acceptance/ using only szqiueneqmktiilagbdv. Its existing dummy course, purchase and progress records are preserved.
 
 ## Current state
 
@@ -13,6 +13,8 @@ The administrator can edit courses, inspect enrollments/progress, set independen
 ## Provider and currency decision
 
 SSLCOMMERZ hosted checkout was selected for Bangladesh. Its documented v4 API provides session creation, IPN, validation, merchant-reference reconciliation, refunds and refund-status lookup. The adapter is a separate module and injected into the request handler, allowing later gateway adapters with explicit verified capabilities.
+
+The adapter enforces the documented BDT session range (10.00–500,000.00), fixed decimal precision, and provider billing-field limits. Account emails longer than the documented 50-character field are rejected safely before order creation; they are never truncated or sent to a different address.
 
 The public documentation describes non-BDT currencies as conversion into BDT. Consequently this integration permits actual BDT collection only. USD prices are independently stored/displayed but USD collection is disabled. Native USD collection requires a merchant contract/provider with verified USD charge and settlement capabilities plus a separately tested adapter; changing a displayed currency is not sufficient.
 
@@ -55,13 +57,13 @@ POST callbacks:
 - `/callback/cancel`
 - `/callback/ipn`
 
-Session creation sets all four URLs automatically. Configure the IPN listener in the merchant portal too. Notifications do not use a student session. Browser returns go only to the fixed production `checkout.html` path with the order/course IDs, and the frontend reloads authoritative order state. Supabase Auth email redirect settings, SMTP and credentials are unchanged.
+Session creation sets all four URLs automatically. Configure the IPN listener in the merchant portal too. The official sandbox uses the same callback suffixes under https://szqiueneqmktiilagbdv.supabase.co/functions/v1/academy-payments; never configure the production listener in a sandbox merchant account or vice versa. Notifications do not use a student session. Browser returns go only to the fixed production `checkout.html` path with the order/course IDs, and the frontend reloads authoritative order state. Supabase Auth email redirect settings, SMTP and credentials are unchanged.
 
 ## Acceptance before activation
 
-1. Obtain a dedicated official SSLCOMMERZ sandbox store and then an approved live merchant account. Merchant onboarding must confirm Cardiobug's actual business category, entity identity, bank account, KYC and required licenses/documents. The education and proprietorship checklists differ; do not assume an education institution classification.
+1. Confirm that the merchant provider accepts the current GitHub Pages storefront URL or requires an owned custom domain. Obtain a dedicated official SSLCOMMERZ sandbox store and then an approved live merchant account. Merchant onboarding must confirm Cardiobug's actual business category, entity identity, bank account, KYC and required licenses/documents. The education and proprietorship checklists differ; do not assume an education institution classification.
 2. Publish the actual legal business/support details, course prices/content, and owner-approved purchase/refund terms. The current site transparently says purchases are closed; it does not invent a business address, support mailbox or refund promise.
-3. Exercise the same adapters and migrations in an isolated local Supabase acceptance stack, never with production data. Bootstrap `supabase/schema.sql` only on a new empty acceptance database, then apply the versioned migrations in order. Do not rerun that bootstrap over production or the existing working sandbox. Use a local test account and official sandbox credentials. CLI environment creation/authorization must be available; no paid hosted project is created by this assignment.
+3. Use the installed official acceptance area at https://kuniam68.github.io/cardiobug-sandbox/gateway-acceptance/ and sandbox project szqiueneqmktiilagbdv. No manual database setup is required. Set official sandbox store credentials and COMMERCE_MODE=sandbox, COMMERCE_PROVIDER_ACCEPTED=true in that sandbox project only; the latter authorizes provider tests there and is not evidence of production acceptance. The sandbox database is configured for sandbox testing, but absent server mode/credentials keep checkout unavailable. COMMERCE_LIVE_APPROVED remains false. Use an existing confirmed test login. Because the current student already completed the original dummy course, use a fresh dedicated paid test course created through the sandbox administrator interface or a fresh test account to exercise a new purchase; do not delete the existing enrollment/progress. Supabase Auth email callbacks continue using the existing root sandbox URLs. The old dummy checkout remains at the sandbox root.
 4. Complete provider-hosted BDT sandbox payments, failure/cancellation/retry, validation/IPN delivery, session-loss recovery, delayed notifications, duplicates, risk review, refunds, reconciliation, mobile browser and email-session tests. Keep actual card entry exclusively on the official sandbox hosted page. Record provider acceptance evidence before marking it accepted.
 5. Confirm that merchant network requirements work from the deployed Supabase region. SSLCOMMERZ documents public-IP registration for refund APIs. Supabase shared Edge egress must not be assumed to provide a merchant-approved static IP. Arrange a provider-approved allowlisting/static-egress arrangement if required; do not disable TLS or route credentials through an untrusted proxy. Refund execution remains disabled until this is resolved and tested.
 6. Install live credentials securely while all activation gates remain closed. Verify readiness booleans in `payments-admin.html`; that view never returns secret values.
