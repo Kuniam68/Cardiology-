@@ -6,7 +6,7 @@ The existing dummy-payment journey remains separate. An official provider accept
 
 ## Current state
 
-Live checkout and refunds are disabled. No merchant credentials have been installed, no financial requests have been made, and no simulated completion action/tester bypass is included in production. Existing courses remain as they were; no existing course was converted to paid or repriced.
+Live checkout and refunds are disabled. No merchant credentials have been installed, no financial requests have been made, and no simulated completion action/tester bypass is included in production. Existing courses remain as they were; no existing course was converted to paid or repriced. A separate newly authored introductory course, `intro-cardiology`, is prepared as paid with both amounts awaiting owner approval; see INTRO_COURSE.md.
 
 The administrator can edit courses, inspect enrollments/progress, set independent BDT/USD prices, inspect orders/audit events and prepare full-refund requests. Pricing does not enable payments. Converting a managed course to paid atomically preserves its original JSON privately and sanitizes the public payload. Publishing and editing preserve the protected-content boundary. Existing enrollments are grandfathered; the three bundled public samples always remain free. Existing legacy progress rows remain intact with nullable score fields.
 

@@ -72,3 +72,14 @@ test('unverified paid amounts are not rendered as authoritative prices',()=>{
   const html=studentPriceSummary({BDT:10000,USD:500},{paid:true,verified:false});
   assert.match(html,/Price unavailable/);assert.doesNotMatch(html,/৳100\.00|\$5\.00/);
 });
+
+test('explicit null BDT and USD rows communicate pending approval without inventing a price',async()=>{
+ const db=database(rows.map(r=>({...r,amount_minor:null})));const prices=(await readStudentPrices(async()=>db.client,['fixture'])).get('fixture');
+ assert.equal(prices.pendingApproval,true);assert.equal(hasAvailablePrice(prices),false);
+ const html=studentPriceSummary(prices,{paid:true});assert.match(html,/Awaiting owner approval/);assert.match(html,/Payments unavailable/);assert.doesNotMatch(html,/0\.00|Free/);
+ assert.doesNotMatch(studentPriceSummary(prices,{paid:true,verified:false}),/Awaiting owner approval/);
+});
+test('missing or invalid rows cannot masquerade as owner-pending pricing',async()=>{
+ for(const data of [[],[rows[0]],rows.map(r=>({...r,amount_minor:0})),[...rows.map(r=>({...r,amount_minor:null})),{...rows[0],amount_minor:null}]]){
+ const db=database(data);assert.notEqual((await readStudentPrices(async()=>db.client,['fixture'])).get('fixture').pendingApproval,true);}
+});

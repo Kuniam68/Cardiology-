@@ -75,8 +75,9 @@ test('new/free course edits preserve entered lesson text and answers',()=>{
 async function submitFixture(course,{ready=true,recheckFails=false}={}) {
   const calls=[];
   const fields=new Map();
-  for(const key of ['id','title','subtitle','category','level','art','description'])
+  for(const key of ['id','title','subtitle','category','level','art','description','preview','editorialNote'])
     fields.set('#course-'+key,{value:course[key]||''});
+  fields.set('#course-sources',{value:(course.sources||[]).map(x=>x.join(' | ')).join('\n')});
   fields.set('#course-sample',{checked:true});
   fields.set('#course-outcomes',{value:course.outcomes.join('\n')});
   fields.set('#course-editor',{hidden:false,querySelectorAll:()=>[]});
@@ -122,4 +123,10 @@ test('form with checkout disabled saves full edited text after protection rechec
   assert.ok(saved);
   assert.equal(saved.args.course_payload.lessons[0].content,'Updated synthetic text');
   assert.equal(saved.args.is_published,false);
+});
+
+test('administrator saves public preview, editorial status and references without losing lessons',async()=>{
+ const c=full();Object.assign(c,{preview:'Public introduction',editorialNote:'Owner review pending',sources:[['NHLBI','https://www.nhlbi.nih.gov/health/heart']]});
+ const r=await submitFixture(c);const saved=r.calls.find(x=>x.name==='save_academy_course').args.course_payload;
+ assert.equal(saved.preview,c.preview);assert.equal(saved.editorialNote,c.editorialNote);assert.equal(saved.sources[0][1],c.sources[0][1]);assert.equal(saved.lessons[0].content,c.lessons[0].content);
 });
