@@ -1,21 +1,8 @@
-# Cardiobug Supabase activation
+# Cardiobug Supabase setup
 
-The GitHub Pages frontend is connected to the Cardiobug project at `https://zeneffylfgiyezpegqto.supabase.co` using its public publishable key. No database password, service-role key, Supabase secret key, or Turnstile secret belongs in the repository.
+Production is installed and migrated at `zeneffylfgiyezpegqto`. Do not rerun the legacy `schema.sql` bootstrap over this project. The current migration plan/history, payment operations guide and recovery procedure are authoritative. Account credentials, SMTP and existing email redirects were preserved during the commerce upgrade.
 
-## Verified project state
-
-A read-only connection check confirmed email authentication and signup are enabled, and automatic email confirmation is disabled (users must verify their email). The `enrollments`, `lesson_progress`, and `academy_courses` tables were not found. Their RLS policies cannot be applied using a public publishable key.
-
-## Create tables and RLS
-
-Either connect the Supabase integration in ChatGPT so the assistant can apply the migration through your authorized connection, or:
-
-1. Open your Cardiobug project in the Supabase dashboard.
-2. Open **SQL Editor → New query**.
-3. Copy the entire contents of [`supabase/schema.sql`](../supabase/schema.sql) and run it.
-4. Verify RLS is enabled on the course catalog, course lessons, enrollments, lesson progress, academy admins, and managed courses tables.
-
-The migration restricts student reads and inserts to rows where `user_id = auth.uid()`. It grants no client update/delete privileges on private progress records. Course administration requires an admin table entry set by the project owner, not editable user metadata. Draft content is admin-only. Public keys cannot create these database objects; no privileged credential needs to be shared in chat.
+Client code uses only the public publishable key. Privileged keys and merchant credentials belong only in server secrets. Students read their own learning records, and all new lesson completion writes use the server-verified quiz RPC. Administrative authorization comes from `academy_admins`, never editable user metadata.
 
 ## Configure email redirects AFTER publication
 

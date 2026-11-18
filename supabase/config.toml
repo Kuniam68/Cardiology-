@@ -1,0 +1,3 @@
+[functions.academy-payments]
+# Authenticated actions verify JWTs using Supabase Auth getUser. Callbacks are verified via provider APIs.
+verify_jwt = false

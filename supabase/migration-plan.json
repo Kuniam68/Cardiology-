@@ -1,0 +1,24 @@
+{
+  "targetProject": "zeneffylfgiyezpegqto",
+  "initialRevision": "29ab2414f7bf235cad1b09c49d526745cada9cc5",
+  "checkoutMustRemainDisabled": true,
+  "migrations": [
+    {
+      "file": "20261118082524_production_commerce_foundation.sql",
+      "sha256": "7b9522e79f1cca117d87dcdae5a276647fecf243ec9ca7bd5b7435fbe62496c3"
+    },
+    {
+      "file": "20261118082549_production_commerce_operations.sql",
+      "sha256": "1de02ec4aa23f5ebca6b54d87ceb572185dcb8561d6c5abde9c29dc6006536a4"
+    },
+    {
+      "file": "20261118091018_production_commerce_review_safety.sql",
+      "sha256": "d6a323f555597d1b1666b6a46c57ec0fce29eb86e72d8cb341cf866663212c49"
+    },
+    {
+      "file": "20261118091352_production_commerce_policy_indexes.sql",
+      "sha256": "3361e807260a284de597097d6d7f94c6b230afc394125574386d5f2c2dcb88ac"
+    }
+  ],
+  "historyNote": "Local CLI-generated scripts renamed to the versions recorded by hosted MCP apply_migration, preserving byte-identical SQL."
+}

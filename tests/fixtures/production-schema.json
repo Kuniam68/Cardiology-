@@ -1,0 +1,470 @@
+{
+  "acl": [
+    {
+      "acl": [
+        "postgres=arwdDxtm/postgres",
+        "service_role=Dxtm/postgres",
+        "anon=r/postgres",
+        "authenticated=r/postgres"
+      ],
+      "rls": true,
+      "table": "academy_courses"
+    },
+    {
+      "acl": [
+        "postgres=arwdDxtm/postgres",
+        "service_role=Dxtm/postgres",
+        "authenticated=ar/postgres"
+      ],
+      "rls": true,
+      "table": "enrollments"
+    },
+    {
+      "acl": [
+        "postgres=arwdDxtm/postgres",
+        "service_role=Dxtm/postgres",
+        "authenticated=ar/postgres"
+      ],
+      "rls": true,
+      "table": "lesson_progress"
+    },
+    {
+      "acl": [
+        "postgres=arwdDxtm/postgres",
+        "service_role=Dxtm/postgres",
+        "anon=r/postgres",
+        "authenticated=r/postgres"
+      ],
+      "rls": true,
+      "table": "course_catalog"
+    },
+    {
+      "acl": [
+        "postgres=arwdDxtm/postgres",
+        "service_role=Dxtm/postgres",
+        "anon=r/postgres",
+        "authenticated=r/postgres"
+      ],
+      "rls": true,
+      "table": "course_lessons"
+    },
+    {
+      "acl": [
+        "postgres=arwdDxtm/postgres",
+        "service_role=Dxtm/postgres",
+        "authenticated=r/postgres"
+      ],
+      "rls": true,
+      "table": "academy_admins"
+    }
+  ],
+  "tables": {
+    "enrollments": [],
+    "academy_admins": [
+      {
+        "user_id": "11111111-1111-4111-8111-111111111111"
+      }
+    ],
+    "course_catalog": [
+      {
+        "id": "ecg-essentials",
+        "title": "ECG essentials"
+      },
+      {
+        "id": "heart-foundations",
+        "title": "Cardiovascular foundations"
+      },
+      {
+        "id": "prevention",
+        "title": "Risk and everyday heart health"
+      }
+    ],
+    "course_lessons": [
+      {
+        "course_id": "ecg-essentials",
+        "lesson_id": "approach"
+      },
+      {
+        "course_id": "ecg-essentials",
+        "lesson_id": "electrical"
+      },
+      {
+        "course_id": "ecg-essentials",
+        "lesson_id": "waves"
+      },
+      {
+        "course_id": "heart-foundations",
+        "lesson_id": "chambers"
+      },
+      {
+        "course_id": "heart-foundations",
+        "lesson_id": "coronary"
+      },
+      {
+        "course_id": "heart-foundations",
+        "lesson_id": "valves"
+      },
+      {
+        "course_id": "prevention",
+        "lesson_id": "habits"
+      },
+      {
+        "course_id": "prevention",
+        "lesson_id": "measurements"
+      },
+      {
+        "course_id": "prevention",
+        "lesson_id": "risk"
+      }
+    ],
+    "academy_courses": [],
+    "lesson_progress": []
+  },
+  "columns": [
+    {
+      "data_type": "uuid",
+      "table_name": "academy_admins",
+      "column_name": "user_id",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "data_type": "text",
+      "table_name": "academy_courses",
+      "column_name": "id",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "data_type": "jsonb",
+      "table_name": "academy_courses",
+      "column_name": "payload",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "data_type": "boolean",
+      "table_name": "academy_courses",
+      "column_name": "published",
+      "is_nullable": "NO",
+      "column_default": "false"
+    },
+    {
+      "data_type": "boolean",
+      "table_name": "academy_courses",
+      "column_name": "archived",
+      "is_nullable": "NO",
+      "column_default": "false"
+    },
+    {
+      "data_type": "timestamp with time zone",
+      "table_name": "academy_courses",
+      "column_name": "updated_at",
+      "is_nullable": "NO",
+      "column_default": "now()"
+    },
+    {
+      "data_type": "text",
+      "table_name": "course_catalog",
+      "column_name": "id",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "data_type": "text",
+      "table_name": "course_catalog",
+      "column_name": "title",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "data_type": "text",
+      "table_name": "course_lessons",
+      "column_name": "course_id",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "data_type": "text",
+      "table_name": "course_lessons",
+      "column_name": "lesson_id",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "data_type": "uuid",
+      "table_name": "enrollments",
+      "column_name": "user_id",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "data_type": "text",
+      "table_name": "enrollments",
+      "column_name": "course_id",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "data_type": "timestamp with time zone",
+      "table_name": "enrollments",
+      "column_name": "created_at",
+      "is_nullable": "NO",
+      "column_default": "now()"
+    },
+    {
+      "data_type": "uuid",
+      "table_name": "lesson_progress",
+      "column_name": "user_id",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "data_type": "text",
+      "table_name": "lesson_progress",
+      "column_name": "course_id",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "data_type": "text",
+      "table_name": "lesson_progress",
+      "column_name": "lesson_id",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "data_type": "timestamp with time zone",
+      "table_name": "lesson_progress",
+      "column_name": "completed_at",
+      "is_nullable": "NO",
+      "column_default": "now()"
+    }
+  ],
+  "policies": [
+    {
+      "cmd": "SELECT",
+      "qual": "is_academy_admin()",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "academy_courses",
+      "permissive": "PERMISSIVE",
+      "policyname": "admin_courses_read",
+      "schemaname": "public",
+      "with_check": null
+    },
+    {
+      "cmd": "SELECT",
+      "qual": "(published AND (NOT archived))",
+      "roles": [
+        "anon",
+        "authenticated"
+      ],
+      "tablename": "academy_courses",
+      "permissive": "PERMISSIVE",
+      "policyname": "published_courses_read",
+      "schemaname": "public",
+      "with_check": null
+    },
+    {
+      "cmd": "INSERT",
+      "qual": null,
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "enrollments",
+      "permissive": "PERMISSIVE",
+      "policyname": "own_enrollments_insert",
+      "schemaname": "public",
+      "with_check": "((( SELECT auth.uid() AS uid) = user_id) AND course_is_available(course_id))"
+    },
+    {
+      "cmd": "SELECT",
+      "qual": "(( SELECT auth.uid() AS uid) = user_id)",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "enrollments",
+      "permissive": "PERMISSIVE",
+      "policyname": "own_enrollments_read",
+      "schemaname": "public",
+      "with_check": null
+    },
+    {
+      "cmd": "INSERT",
+      "qual": null,
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "lesson_progress",
+      "permissive": "PERMISSIVE",
+      "policyname": "own_progress_insert",
+      "schemaname": "public",
+      "with_check": "(( SELECT auth.uid() AS uid) = user_id)"
+    },
+    {
+      "cmd": "SELECT",
+      "qual": "(( SELECT auth.uid() AS uid) = user_id)",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "lesson_progress",
+      "permissive": "PERMISSIVE",
+      "policyname": "own_progress_read",
+      "schemaname": "public",
+      "with_check": null
+    },
+    {
+      "cmd": "SELECT",
+      "qual": "course_is_available(id)",
+      "roles": [
+        "anon",
+        "authenticated"
+      ],
+      "tablename": "course_catalog",
+      "permissive": "PERMISSIVE",
+      "policyname": "catalog_read",
+      "schemaname": "public",
+      "with_check": null
+    },
+    {
+      "cmd": "SELECT",
+      "qual": "course_is_available(course_id)",
+      "roles": [
+        "anon",
+        "authenticated"
+      ],
+      "tablename": "course_lessons",
+      "permissive": "PERMISSIVE",
+      "policyname": "lessons_read",
+      "schemaname": "public",
+      "with_check": null
+    },
+    {
+      "cmd": "SELECT",
+      "qual": "(( SELECT auth.uid() AS uid) = user_id)",
+      "roles": [
+        "authenticated"
+      ],
+      "tablename": "academy_admins",
+      "permissive": "PERMISSIVE",
+      "policyname": "admin_self_read",
+      "schemaname": "public",
+      "with_check": null
+    }
+  ],
+  "functions": [
+    {
+      "acl": [
+        "postgres=X/postgres"
+      ],
+      "name": "rls_auto_enable",
+      "identity": "",
+      "definition": "CREATE OR REPLACE FUNCTION public.rls_auto_enable()\n RETURNS event_trigger\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO 'pg_catalog'\nAS $function$\nDECLARE\n  cmd record;\n  tbl name;\nBEGIN\n  FOR cmd IN\n    SELECT *\n    FROM pg_event_trigger_ddl_commands()\n    WHERE command_tag IN ('CREATE TABLE', 'CREATE TABLE AS', 'SELECT INTO')\n      AND object_type IN ('table','partitioned table')\n  LOOP\n     IF cmd.schema_name IS NOT NULL AND cmd.schema_name IN ('public') AND cmd.schema_name NOT IN ('pg_catalog','information_schema') AND cmd.schema_name NOT LIKE 'pg_toast%' AND cmd.schema_name NOT LIKE 'pg_temp%' THEN\n      BEGIN\n        SELECT c.relname INTO tbl FROM pg_catalog.pg_class c WHERE c.oid = cmd.objid;\n        EXECUTE format('alter table if exists %I.%I enable row level security', cmd.schema_name, tbl);\n        RAISE LOG 'rls_auto_enable: enabled RLS on %', cmd.object_identity;\n      EXCEPTION\n        WHEN OTHERS THEN\n          RAISE LOG 'rls_auto_enable: failed to enable RLS on %', cmd.object_identity;\n      END;\n     ELSE\n        RAISE LOG 'rls_auto_enable: skip % (either system schema or not in enforced list: %.)', cmd.object_identity, cmd.schema_name;\n     END IF;\n  END LOOP;\nEND;\n$function$\n"
+    },
+    {
+      "acl": [
+        "postgres=X/postgres",
+        "authenticated=X/postgres"
+      ],
+      "name": "is_academy_admin",
+      "identity": "",
+      "definition": "CREATE OR REPLACE FUNCTION public.is_academy_admin()\n RETURNS boolean\n LANGUAGE sql\n STABLE\n SET search_path TO ''\nAS $function$ select exists(select 1 from public.academy_admins where user_id=(select auth.uid())); $function$\n"
+    },
+    {
+      "acl": [
+        "postgres=X/postgres",
+        "authenticated=X/postgres"
+      ],
+      "name": "save_academy_course",
+      "identity": "course_id text, course_payload jsonb, is_published boolean",
+      "definition": "CREATE OR REPLACE FUNCTION public.save_academy_course(course_id text, course_payload jsonb, is_published boolean DEFAULT false)\n RETURNS void\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO ''\nAS $function$\r\ndeclare lesson jsonb; seen text[] := '{}'; lesson_key text;\r\nbegin\r\n if not public.is_academy_admin() then raise exception 'Administrator access required' using errcode='42501'; end if;\r\n if course_id is null or course_id !~ '^[a-z][a-z0-9-]{1,79}$' then raise exception 'Invalid course ID'; end if;\r\n if course_payload is null or jsonb_typeof(course_payload) <> 'object' or pg_column_size(course_payload)>500000 then raise exception 'Invalid or oversized course'; end if;\r\n if coalesce(length(trim(course_payload->>'title')),0) not between 1 and 2000\r\n or coalesce(length(trim(course_payload->>'subtitle')),0) not between 1 and 2000\r\n or coalesce(length(trim(course_payload->>'category')),0) not between 1 and 2000\r\n or coalesce(length(trim(course_payload->>'description')),0) not between 1 and 2000 then raise exception 'Complete course information'; end if;\r\n if jsonb_typeof(course_payload->'outcomes') is distinct from 'array' then raise exception 'Learning outcomes required'; end if;\r\n if jsonb_array_length(course_payload->'outcomes') not between 1 and 12 then raise exception 'Provide 1-12 outcomes'; end if;\r\n if exists(select 1 from jsonb_array_elements(course_payload->'outcomes') x where jsonb_typeof(x)<>'string' or length(trim(x#>>'{}')) not between 1 and 500) then raise exception 'Invalid learning outcome'; end if;\r\n if jsonb_typeof(course_payload->'lessons') is distinct from 'array' then raise exception 'Lessons required'; end if;\r\n if jsonb_array_length(course_payload->'lessons') not between 1 and 60 then raise exception 'Provide 1-60 lessons'; end if;\r\n for lesson in select value from jsonb_array_elements(course_payload->'lessons') loop\r\n  lesson_key:=lesson->>'id';\r\n  if lesson_key is null or lesson_key !~ '^[a-z][a-z0-9-]{1,79}$' or lesson_key=any(seen) then raise exception 'Invalid or duplicate lesson ID'; end if;\r\n  seen:=array_append(seen,lesson_key);\r\n  if coalesce(length(trim(lesson->>'title')),0) not between 1 and 200 or coalesce(length(trim(lesson->>'content')),0) not between 1 and 50000 then raise exception 'Lesson title and content required'; end if;\r\n  if coalesce(lesson->>'minutes','') !~ '^[0-9]{1,3}$' then raise exception 'Invalid lesson duration'; end if;\r\n  if (lesson->>'minutes')::integer not between 1 and 600 then raise exception 'Invalid lesson duration'; end if;\r\n  if coalesce(length(trim(lesson->>'question')),0)=0 or coalesce(length(trim(lesson->>'explanation')),0)=0 then raise exception 'Knowledge check required'; end if;\r\n  if jsonb_typeof(lesson->'options') is distinct from 'array' then raise exception 'Three answer options required'; end if;\r\n  if jsonb_array_length(lesson->'options')<>3 or coalesce(lesson->>'answer','') !~ '^[012]$' then raise exception 'Invalid knowledge check'; end if;\r\n  if exists(select 1 from jsonb_array_elements(lesson->'options') x where jsonb_typeof(x)<>'string' or length(trim(x#>>'{}')) not between 1 and 500) then raise exception 'Invalid answer option'; end if;\r\n end loop;\r\n insert into public.course_catalog(id,title) values(course_id,course_payload->>'title') on conflict(id) do update set title=excluded.title;\r\n foreach lesson_key in array seen loop\r\n  insert into public.course_lessons(course_id,lesson_id) values(course_id,lesson_key) on conflict do nothing;\r\n end loop;\r\n insert into public.academy_courses(id,payload,published) values(course_id,course_payload,coalesce(is_published,false))\r\n on conflict(id) do update set payload=excluded.payload,published=excluded.published,archived=case when excluded.published then false else academy_courses.archived end,updated_at=now();\r\nend; $function$\n"
+    },
+    {
+      "acl": [
+        "postgres=X/postgres",
+        "authenticated=X/postgres"
+      ],
+      "name": "archive_academy_course",
+      "identity": "course_id text, archive boolean",
+      "definition": "CREATE OR REPLACE FUNCTION public.archive_academy_course(course_id text, archive boolean)\n RETURNS void\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO ''\nAS $function$\r\nbegin\r\n if not public.is_academy_admin() then raise exception 'Administrator access required' using errcode='42501'; end if;\r\n update public.academy_courses set archived=coalesce(archive,true),updated_at=now() where id=course_id;\r\n if not found then raise exception 'Course not found'; end if;\r\nend; $function$\n"
+    },
+    {
+      "acl": [
+        "postgres=X/postgres",
+        "authenticated=X/postgres"
+      ],
+      "name": "course_is_available",
+      "identity": "course_key text",
+      "definition": "CREATE OR REPLACE FUNCTION public.course_is_available(course_key text)\n RETURNS boolean\n LANGUAGE sql\n STABLE\n SET search_path TO ''\nAS $function$\r\n select coalesce(\r\n  (select published and not archived from public.academy_courses where id=course_key),\r\n  course_key in ('heart-foundations','ecg-essentials','prevention')\r\n );\r\n$function$\n"
+    }
+  ],
+  "constraints": [
+    {
+      "name": "course_catalog_pkey",
+      "table": "course_catalog",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "name": "course_lessons_pkey",
+      "table": "course_lessons",
+      "definition": "PRIMARY KEY (course_id, lesson_id)"
+    },
+    {
+      "name": "course_lessons_course_id_fkey",
+      "table": "course_lessons",
+      "definition": "FOREIGN KEY (course_id) REFERENCES course_catalog(id)"
+    },
+    {
+      "name": "enrollments_pkey",
+      "table": "enrollments",
+      "definition": "PRIMARY KEY (user_id, course_id)"
+    },
+    {
+      "name": "enrollments_user_id_fkey",
+      "table": "enrollments",
+      "definition": "FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "enrollments_course_id_fkey",
+      "table": "enrollments",
+      "definition": "FOREIGN KEY (course_id) REFERENCES course_catalog(id)"
+    },
+    {
+      "name": "lesson_progress_pkey",
+      "table": "lesson_progress",
+      "definition": "PRIMARY KEY (user_id, course_id, lesson_id)"
+    },
+    {
+      "name": "lesson_progress_user_id_course_id_fkey",
+      "table": "lesson_progress",
+      "definition": "FOREIGN KEY (user_id, course_id) REFERENCES enrollments(user_id, course_id) ON DELETE CASCADE"
+    },
+    {
+      "name": "lesson_progress_course_id_lesson_id_fkey",
+      "table": "lesson_progress",
+      "definition": "FOREIGN KEY (course_id, lesson_id) REFERENCES course_lessons(course_id, lesson_id)"
+    },
+    {
+      "name": "academy_admins_pkey",
+      "table": "academy_admins",
+      "definition": "PRIMARY KEY (user_id)"
+    },
+    {
+      "name": "academy_admins_user_id_fkey",
+      "table": "academy_admins",
+      "definition": "FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "academy_courses_id_check",
+      "table": "academy_courses",
+      "definition": "CHECK ((id ~ '^[a-z][a-z0-9-]{1,79}$'::text))"
+    },
+    {
+      "name": "academy_courses_pkey",
+      "table": "academy_courses",
+      "definition": "PRIMARY KEY (id)"
+    }
+  ]
+}
