@@ -1,4 +1,4 @@
-import {minorToDecimal,MAX_MINOR} from './money.js?v=commerce-1';
+import {minorToDecimal,MAX_MINOR} from './money.js?v=commerce-2';
 
 const codes=['BDT','USD'];
 const validAmount=value=>Number.isSafeInteger(value)&&value>=1&&value<=MAX_MINOR;

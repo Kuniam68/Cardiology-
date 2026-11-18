@@ -5,20 +5,28 @@
   "migrations": [
     {
       "file": "20261118082524_production_commerce_foundation.sql",
-      "sha256": "7b9522e79f1cca117d87dcdae5a276647fecf243ec9ca7bd5b7435fbe62496c3"
+      "sha256": "7b9522e79f1cca117d87dcdae5a276647fecf243ec9ca7bd5b7435fbe62496c3",
+      "recordedSqlSha256": "a6a747568d6dea7f08cf01ad46ff2129b480d29e197e8e217fee172d7ebb085a",
+      "installationAppendedNewline": true
     },
     {
       "file": "20261118082549_production_commerce_operations.sql",
-      "sha256": "1de02ec4aa23f5ebca6b54d87ceb572185dcb8561d6c5abde9c29dc6006536a4"
+      "sha256": "1de02ec4aa23f5ebca6b54d87ceb572185dcb8561d6c5abde9c29dc6006536a4",
+      "recordedSqlSha256": "66a6b7d05782837464c3da2addb653f0a036b92d772f8479969b7d558ef40eea",
+      "installationAppendedNewline": true
     },
     {
       "file": "20261118091018_production_commerce_review_safety.sql",
-      "sha256": "d6a323f555597d1b1666b6a46c57ec0fce29eb86e72d8cb341cf866663212c49"
+      "sha256": "d6a323f555597d1b1666b6a46c57ec0fce29eb86e72d8cb341cf866663212c49",
+      "recordedSqlSha256": "d6a323f555597d1b1666b6a46c57ec0fce29eb86e72d8cb341cf866663212c49",
+      "installationAppendedNewline": false
     },
     {
       "file": "20261118091352_production_commerce_policy_indexes.sql",
-      "sha256": "3361e807260a284de597097d6d7f94c6b230afc394125574386d5f2c2dcb88ac"
+      "sha256": "3361e807260a284de597097d6d7f94c6b230afc394125574386d5f2c2dcb88ac",
+      "recordedSqlSha256": "3361e807260a284de597097d6d7f94c6b230afc394125574386d5f2c2dcb88ac",
+      "installationAppendedNewline": false
     }
   ],
-  "historyNote": "Local CLI-generated scripts renamed to the versions recorded by hosted MCP apply_migration, preserving byte-identical SQL."
+  "historyNote": "Local CLI-generated scripts renamed to hosted history versions. The first two installation calls appended one newline; local and recorded SQL hashes are both verified and recorded."
 }

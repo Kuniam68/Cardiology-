@@ -1,8 +1,8 @@
-import {config} from './config.js?v=commerce-1';
-import {client,currentUser,configured,friendlyError} from './auth.js?v=commerce-1';
-import {escapeHtml as esc} from './course-model.js?v=commerce-1';
-import {sampleCourses} from './courses.js?v=commerce-1';
-import {loadEditableCourse,assertEditableCourse} from './admin-content.js?v=commerce-1';
+import {config} from './config.js?v=commerce-2';
+import {client,currentUser,configured,friendlyError} from './auth.js?v=commerce-2';
+import {escapeHtml as esc} from './course-model.js?v=commerce-2';
+import {sampleCourses} from './courses.js?v=commerce-2';
+import {loadEditableCourse,assertEditableCourse} from './admin-content.js?v=commerce-2';
 const root=document.getElementById('admin-app');
 let rows=[],editingId=null,editorReady=false,editorVersion=0;
 const $=s=>root.querySelector(s);

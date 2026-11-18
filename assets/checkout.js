@@ -1,7 +1,7 @@
-import {client,currentUser} from './auth.js?v=commerce-1';
-import {checkoutEnabled,gatewayReadiness,paymentRequest,paymentAccess} from './payments.js?v=commerce-1';
-import {minorToDecimal} from './money.js?v=commerce-1';
-import {escapeHtml as esc} from './course-model.js?v=commerce-1';
+import {client,currentUser} from './auth.js?v=commerce-2';
+import {checkoutEnabled,gatewayReadiness,paymentRequest,paymentAccess} from './payments.js?v=commerce-2';
+import {minorToDecimal} from './money.js?v=commerce-2';
+import {escapeHtml as esc} from './course-model.js?v=commerce-2';
 const root=document.getElementById('checkout-app'),params=new URLSearchParams(location.search);
 const money=(n,c)=>(c==='BDT'?'৳':'$')+minorToDecimal(Number(n));
 let user,quote,ready,order,key,course;

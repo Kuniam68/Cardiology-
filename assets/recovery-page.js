@@ -1,5 +1,5 @@
-import {createRecoveryController,parseRecoveryLink} from './recovery.js?v=commerce-1';
-import {recoveryClient} from './auth.js?v=commerce-1';
+import {createRecoveryController,parseRecoveryLink} from './recovery.js?v=commerce-2';
+import {recoveryClient} from './auth.js?v=commerce-2';
 
 export function captureRecoveryLink(location,history){
  let link,error;

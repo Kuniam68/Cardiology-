@@ -1,4 +1,4 @@
-import {config} from './config.js?v=commerce-1';
+import {config} from './config.js?v=commerce-2';
 export function captchaOptions(token){return token?{captchaToken:token}:{}}
 export function captchaRequired(settings=config){return settings.turnstileMode==='required'}
 let loader;
