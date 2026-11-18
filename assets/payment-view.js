@@ -1,0 +1,11 @@
+import {escapeHtml as esc} from './course-model.js?v=completion-1';
+import {minorToDecimal} from './money.js?v=completion-1';
+export const ORDER_STATUSES=Object.freeze({initializing:'Preparing payment',pending:'Awaiting payment',session_unknown:'Session needs reconciliation',succeeded:'Payment verified',failed:'Payment failed',cancelled:'Payment cancelled',review:'Awaiting review',refunded:'Payment refunded'});
+export const orderStatusLabel=status=>ORDER_STATUSES[status]||'Status unavailable';
+export function amountLabel(amount,currency){const n=Number(amount);if(!['BDT','USD'].includes(currency)||!Number.isSafeInteger(n)||n<1||n>1000000000)return 'Amount unavailable';return (currency==='BDT'?'৳':'$')+minorToDecimal(n);}
+export function dateLabel(value){const date=new Date(value);return value&&Number.isFinite(date.valueOf())?new Intl.DateTimeFormat('en-GB',{dateStyle:'medium',timeStyle:'short'}).format(date):'Date unavailable';}
+export function orderLink(order){return typeof order?.id==='string'&&/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i.test(order.id)?'checkout.html?order='+encodeURIComponent(order.id):null;}
+export function paymentHistoryMarkup(orders){if(!Array.isArray(orders))throw new Error('Order history unavailable');return '<h3>Payment history</h3>'+(orders.length?orders.map(o=>`<article class="admin-row payment-history-row"><div><strong>${esc(amountLabel(o.amount_minor,o.currency))} · ${esc(orderStatusLabel(o.status))}</strong><p>${esc(o.course_id)}<br>Reference: ${esc(o.merchant_ref||'Not available')}<br>${esc(dateLabel(o.created_at))}</p></div>${orderLink(o)?`<a class="btn small" href="${orderLink(o)}" aria-label="View payment status for ${esc(o.merchant_ref||o.id)}">View payment status</a>`:''}</article>`).join(''):'<p>No purchases yet. Your free courses and saved progress are available above.</p>');}
+export function learningScoreText(lessons){let score=0,total=0;for(const l of lessons){if(Number.isSafeInteger(l.quiz_score)&&Number.isSafeInteger(l.quiz_total)&&l.quiz_total>0&&l.quiz_score>=0&&l.quiz_score<=l.quiz_total){score+=l.quiz_score;total+=l.quiz_total;}}return total?'Quiz score: '+score+' / '+total+' · Saved across your signed-in devices.':'No scored quiz completions yet. Earlier lesson completion records remain saved.';}
+
+export const PHONE_PATTERN=String.raw`[+0-9\x20\(\)\-]{7,20}`;

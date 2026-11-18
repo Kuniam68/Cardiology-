@@ -1,5 +1,5 @@
-import {decimalToMinor,minorToDecimal} from './money.js?v=commerce-2';
-import {client,currentUser} from './auth.js?v=commerce-2';
+import {decimalToMinor,minorToDecimal} from './money.js?v=completion-1';
+import {client,currentUser} from './auth.js?v=completion-1';
 const form=document.getElementById('pricing-form'),notice=document.getElementById('pricing-status');
 const tell=(text,error=false)=>{notice.textContent=text;notice.classList.toggle('error',error);};
 if(form){try{const c=await client();if(!await currentUser())throw new Error('Sign in as an academy administrator.');const admin=await c.rpc('is_academy_admin');if(admin.error||!admin.data)throw new Error('Administrator access required.');form.querySelector('fieldset').disabled=false;form.elements.course.value=new URLSearchParams(location.search).get('course')||'';

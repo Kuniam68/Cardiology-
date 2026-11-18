@@ -44,12 +44,12 @@ export function createCommerceHandler({env,repository,authenticate,providerFacto
    }
    if(b.action==='my-orders'){fields(b,['action']);return json((await repository.myOrders(user.id)).map(orderView),200,cors);}
    if(b.action==='get-order'){
-    fields(b,['action','orderId']);const o=await owned(user,b.orderId);return json({...orderView(o),checkoutUrl:o.status==='pending'?o.checkout_url:null},200,cors);
+    fields(b,['action','orderId']);const o=await owned(user,b.orderId);let access=null;try{access=await repository.hasAccess(request,o.course_id);if(typeof access!=='boolean')access=null;}catch{}let available=false;try{available=(await ready()).available;}catch{}return json({...orderView(o),courseAccess:access,checkoutUrl:o.status==='pending'&&available&&access===false?o.checkout_url:null},200,cors);
    }
    if(b.action==='create-session'){
     fields(b,['action','courseId','currency','requestKey','customer']);const r=await allowProvider();if(!r.available)return json({error:'Live checkout is not yet available.'},503,cors);
     if(b.currency!=='BDT')return json({error:'This gateway is approved for BDT only. USD collection is unavailable.'},400,cors);
-    const quote=await repository.quote(courseId(b.courseId));if(!quote?.paid)throw new Error('Paid course unavailable');const billing=customer(b.customer,user,quote.title);
+    const quote=await repository.quote(courseId(b.courseId));if(!quote?.paid)throw new Error('Paid course unavailable');const billing=customer(b.customer,user,quote.title);const access=await repository.hasAccess(request,b.courseId);if(access!==false)return json({error:access===true?'This account already has course access. Open it from your dashboard.':'Course access could not be verified.'},409,cors);
     let o=await repository.createOrder(user.id,b.courseId,b.currency,uuid(b.requestKey),env.mode);
     if(o.status==='pending'&&o.checkout_url)return json({...orderView(o),checkoutUrl:o.checkout_url},200,cors);
     if(o.status!=='initializing'||!await repository.claimSession(o.id))return json({...orderView(o),checkoutUrl:null},200,cors);

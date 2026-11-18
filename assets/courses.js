@@ -21,9 +21,9 @@ for(const c of courses)c.isSample=true;
 export const sampleCourses=structuredClone(courses);
 export let catalogStatus='sample';
 export async function loadCourses(){
- const {configured,client}=await import('./auth.js?v=commerce-2');if(!configured)return;
+ const {configured,client}=await import('./auth.js?v=completion-1');if(!configured)return;
  try{const c=await client();const {data,error}=await c.from('academy_courses').select('id,payload').eq('published',true).eq('archived',false).order('updated_at',{ascending:false}).abortSignal(AbortSignal.timeout(10000));if(error)throw error;
- const {normalizeCourse}=await import('./course-model.js?v=commerce-2');
+ const {normalizeCourse}=await import('./course-model.js?v=completion-1');
  courses=data.map(row=>normalizeCourse(row.payload,row.id));catalogStatus=data.length?'live':'empty';
  }catch{catalogStatus='unavailable'}
 }

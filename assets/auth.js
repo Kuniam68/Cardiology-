@@ -1,6 +1,6 @@
-import {config} from './config.js?v=commerce-2';
-import {paymentAccess} from './payments.js?v=commerce-2';
-import {recoveryStorage,hasRecoveryVerifier} from './recovery.js?v=commerce-2';
+import {config} from './config.js?v=completion-1';
+import {paymentAccess} from './payments.js?v=completion-1';
+import {recoveryStorage,hasRecoveryVerifier} from './recovery.js?v=completion-1';
 export const configured=Boolean(config.supabaseUrl&&config.supabasePublishableKey);
 let clientPromise;
 export function client(){

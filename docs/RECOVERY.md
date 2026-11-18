@@ -15,3 +15,7 @@ Operational rollback:
 4. If application data ever requires restoration, restore the private backup into a new isolated database first and compare it before requesting an owner-approved targeted recovery. Do not overwrite production with a stale snapshot: that would discard subsequent real enrollments/progress and is not authorized.
 
 A routine stop/revert keeps all added score columns, protected-content policies, payment snapshots and audit history. Credentials and existing original course data are not changed by this release. Obtain a managed full-project backup/PITR retention suitable for live financial operation before activation; no paid plan or backup subscription was purchased here.
+
+## Final completion recovery point
+
+The subsequent frontend/payment-function completion has a separate verified baseline at `d12e8156a9f399a5ff7a31bc80e31445e67d705d`. Its private recovery directory is `/workspace/private/cardiobug-final-completion/`. The Git bundle was cloned and checked, all 14 application table snapshots matched a restored isolated PostgreSQL instance, and the safe stop SQL was exercised there. No production database objects or records were changed by that completion release. See FINAL_COMPLETION.md for scope and rollback instructions.
