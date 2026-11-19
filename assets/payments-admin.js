@@ -1,7 +1,7 @@
-import {client,currentUser} from './auth.js?v=course-launch-1';
-import {paymentRequest} from './payments.js?v=course-launch-1';
-import {escapeHtml as esc} from './course-model.js?v=course-launch-1';
-import {amountLabel,orderStatusLabel,dateLabel} from './payment-view.js?v=course-launch-1';
+import {client,currentUser} from './auth.js?v=academy-review-1';
+import {paymentRequest} from './payments.js?v=academy-review-1';
+import {escapeHtml as esc} from './course-model.js?v=academy-review-1';
+import {amountLabel,orderStatusLabel,dateLabel} from './payment-view.js?v=academy-review-1';
 const root=document.getElementById('payments-admin');
 let data,filterText='',filterStatus='';
 function tell(text,error=false){const el=root.querySelector('#payments-status');if(el){el.textContent=text;el.classList.toggle('error',error);}}

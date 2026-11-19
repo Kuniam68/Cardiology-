@@ -1,5 +1,5 @@
-import {escapeHtml as esc} from './course-model.js?v=course-launch-1';
-import {minorToDecimal} from './money.js?v=course-launch-1';
+import {escapeHtml as esc} from './course-model.js?v=academy-review-1';
+import {minorToDecimal} from './money.js?v=academy-review-1';
 export const ORDER_STATUSES=Object.freeze({initializing:'Preparing payment',pending:'Awaiting payment',session_unknown:'Session needs reconciliation',succeeded:'Payment verified',failed:'Payment failed',cancelled:'Payment cancelled',review:'Awaiting review',refunded:'Payment refunded'});
 export const orderStatusLabel=status=>ORDER_STATUSES[status]||'Status unavailable';
 export function amountLabel(amount,currency){const n=Number(amount);if(!['BDT','USD'].includes(currency)||!Number.isSafeInteger(n)||n<1||n>1000000000)return 'Amount unavailable';return (currency==='BDT'?'৳':'$')+minorToDecimal(n);}

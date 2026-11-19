@@ -1,10 +1,11 @@
+import {pagedRows} from './paged-rows.js';
 // Classification and existing enrollment access are independent of checkout availability.
 export function createStudentAccess({getClient,getUser}) {
   return {
     async catalog() {
       const c=await getClient();
-      const {data,error}=await c.from('payment_course_settings').select('course_id').eq('paid',true);
-      if(error||!Array.isArray(data)||data.some(row=>typeof row.course_id!=='string'))
+      const data=await pagedRows(()=>c.from('payment_course_settings').select('course_id').eq('paid',true).order('course_id'));
+      if(data.some(row=>typeof row.course_id!=='string'))
         throw new Error('Could not verify course availability.');
       return new Set(data.map(row=>row.course_id));
     },

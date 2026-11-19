@@ -14,7 +14,7 @@ const rows=[{course_id:'fixture',currency:'BDT',amount_minor:10000},
 test('reads only public price fields for requested courses without payment endpoints',async()=>{
   const db=database(rows);
   const prices=await readStudentPrices(async()=>db.client,['fixture','fixture']);
-  assert.deepEqual(db.calls,[['from','payment_prices'],['select','course_id,currency,amount_minor'],['in','course_id',['fixture']]]);
+  assert.deepEqual(db.calls,[['from','payment_prices'],['select','course_id,currency,amount_minor,provisional'],['in','course_id',['fixture']]]);
   assert.deepEqual(prices.get('fixture'),{BDT:10000,USD:500});
 });
 test('free-only catalogs make no price request',async()=>{

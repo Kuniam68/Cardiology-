@@ -8,7 +8,7 @@ import {studentPriceSummary,hasAvailablePrice} from '../assets/student-prices.js
 function source(paid,access=false,user={id:'student'}) {
   const calls=[];
   const c={rpc:async(name)=>{calls.push(name);return {data:name==='payment_course_is_paid'?paid:access}},
-    from:()=>({select:()=>({eq:async()=>({data:[{course_id:'fixture-course'}]})})})};
+    from:()=>({select:()=>({eq:()=>({order:()=>({range:async()=>({data:[{course_id:'fixture-course'}]})})})})})};
   return {calls,api:createStudentAccess({getClient:async()=>c,getUser:async()=>user})};
 }
 test('paid classification works with no checkout dependency',async()=>{
@@ -82,7 +82,7 @@ async function renderStudent({paid,access=false,checkout=false,lesson=false,fail
     lessons:[{id:'fixture-lesson',title:'Lesson',minutes:1,body:'PRIVATE_MARKER',options:['a','b','c']} ]};
   const detail={innerHTML:''},lessonPage={innerHTML:''},grid={innerHTML:''},enroll={disabled:false};
   const calls=[];
-  const selectors=new Map(listing?[['#catalog',grid],['#course-search',{value:'',addEventListener(){}}],['#course-count',{textContent:''}],['#category',{value:'',options:[],add(o){this.options.push(o)},addEventListener(){}}]]:lesson?[['#lesson-page',lessonPage],['#quiz',{}],['#complete',{}]]:[['#course-detail',detail],['#enroll',enroll]]);
+  const selectors=new Map(listing?[['#prev-page',{}],['#next-page',{}],['#page-number',{}],['#sort-courses',{value:'recent'}],['#catalog',grid],['#course-search',{value:'',addEventListener(){}}],['#course-count',{textContent:''}],['#category',{value:'',options:[],add(o){this.options.push(o)},addEventListener(){}}]]:lesson?[['#lesson-page',lessonPage],['#quiz',{}],['#complete',{}]]:[['#course-detail',detail],['#enroll',enroll]]);
   const document={title:'',querySelector:s=>selectors.get(s)||null,getElementById:()=>null,
     querySelectorAll:s=>s==='[data-course-grid]'&&!listing?[grid]:[]};
   const context=vm.createContext({document,location:{search:listing?'':'?id=fixture-course&course=fixture-course&lesson=fixture-lesson'},

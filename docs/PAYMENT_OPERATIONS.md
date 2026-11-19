@@ -6,7 +6,7 @@ The existing dummy-payment journey remains separate. An official provider accept
 
 ## Current state
 
-Live checkout and refunds are disabled. No merchant credentials have been installed, no financial requests have been made, and no simulated completion action/tester bypass is included in production. Existing courses remain as they were; no existing course was converted to paid or repriced. A separate newly authored introductory course, `intro-cardiology`, is prepared as paid with both amounts awaiting owner approval; see INTRO_COURSE.md.
+Live checkout and refunds are disabled. No merchant credentials have been installed, no financial requests have been made, and no simulated completion action/tester bypass is included in production. Existing courses remain as they were; no existing course was converted to paid or repriced. A separate newly authored introductory course, `intro-cardiology`, is prepared as paid with provisional display amounts awaiting commercial approval; see INTRO_COURSE.md.
 
 The administrator can edit courses, inspect enrollments/progress, set independent BDT/USD prices, inspect orders/audit events and prepare full-refund requests. Pricing does not enable payments. Converting a managed course to paid atomically preserves its original JSON privately and sanitizes the public payload. Publishing and editing preserve the protected-content boundary. Existing enrollments are grandfathered; the three bundled public samples always remain free. Existing legacy progress rows remain intact with nullable score fields.
 
@@ -76,3 +76,13 @@ Actual native USD collection is a separate provider-capability requirement, not 
 Only full BDT refunds are implemented. An administrator can prepare a request with a reason; that creates an audit record and does not move money. Execution is a separate explicitly gated action. Requests have a stable provider refund transaction ID. Uncertain results are never automatically resubmitted; use refund reconciliation or merchant support. A verified completed refund revokes only the matching entitlement, preserving enrollment history and lesson progress. A different active paid entitlement or administrator access is unaffected. Partial refunds and chargeback/dispute automation are not represented as implemented provider capabilities.
 
 Run `supabase/operations/stop-checkout.sql` only on the verified project to stop new sessions. Keep accepted credentials/environment available to reconcile legitimate in-flight payments. Do not delete orders or alter historic amounts. Review pending/risky/duplicate orders in the administrator page. Provider callbacks are not sufficient evidence on their own.
+
+## Production order review and provisional prices
+
+Introduction to Cardiology has provisional BDT 100.00 and USD 5.00 display prices at revision 2. Students can select either display currency, validate billing fields and use Review order. This review stays in the current page. It creates no payment record, provider session, enrollment or saved billing details.
+
+To create another paid course, use Course manager → New course → Save as unpublished draft. Choose its thumbnail, add lessons, questions, explanations, links and a separate public preview. Open Prices for that row, select paid access, enter the independent amounts and select provisional for display testing. Preview the draft, then publish from the editor. Use Save as unpublished draft to withdraw it and Archive to retain it outside the catalog.
+
+Before merchant activation, review each course's prices separately. A provisional price cannot fund a new order even if checkout is active. Saving a commercial configuration requires the owner's approved amounts and clearing the provisional option. USD remains informational in this gateway. Existing order snapshots retain their own price revision.
+
+For operational rollback, keep the server and database financial gates closed. Restore the compatible frontend and Edge Function from c0809aa if necessary. Retain the additive provisional column and server guard. Restore a missing price through the pricing editor by saving blank amounts with paid access selected. This creates a new revision and preserves audit history. Never overwrite customer records or remove course protection as part of a rollback.

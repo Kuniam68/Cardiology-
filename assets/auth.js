@@ -1,6 +1,6 @@
-import {config} from './config.js?v=course-launch-1';
-import {paymentAccess} from './payments.js?v=course-launch-1';
-import {recoveryStorage,hasRecoveryVerifier} from './recovery.js?v=course-launch-1';
+import {config} from './config.js?v=academy-review-1';
+import {paymentAccess} from './payments.js?v=academy-review-1';
+import {recoveryStorage,hasRecoveryVerifier} from './recovery.js?v=academy-review-1';
 export const configured=Boolean(config.supabaseUrl&&config.supabasePublishableKey);
 let clientPromise;
 export function client(){

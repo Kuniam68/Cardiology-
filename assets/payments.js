@@ -1,7 +1,7 @@
-import {config} from './config.js?v=course-launch-1';
-import {client,currentUser} from './auth.js?v=course-launch-1';
-import {normalizeCourse} from './course-model.js?v=course-launch-1';
-import {createStudentAccess} from './student-access.js?v=course-launch-1';
+import {config} from './config.js?v=academy-review-1';
+import {client,currentUser} from './auth.js?v=academy-review-1';
+import {normalizeCourse} from './course-model.js?v=academy-review-1';
+import {createStudentAccess} from './student-access.js?v=academy-review-1';
 const studentAccess=createStudentAccess({getClient:client,getUser:currentUser});
 export const checkoutEnabled=()=>config.paymentCheckoutEnabled===true;
 export function assertPaymentConfig(){if(config.supabaseUrl!=='https://zeneffylfgiyezpegqto.supabase.co'||config.paymentSandboxEnabled!==false)throw new Error('Production payment configuration rejected.');}

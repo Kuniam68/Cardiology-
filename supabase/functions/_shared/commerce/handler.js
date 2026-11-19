@@ -40,7 +40,7 @@ export function createCommerceHandler({env,repository,authenticate,providerFacto
    const user=await authenticate(request);if(!user?.id||!user.email_confirmed_at)return json({error:'Sign in with an email-confirmed account.'},401,cors);
    if(Number(request.headers.get('content-length')||0)>8192)return json({error:'Request too large'},413,cors);const text=await request.text();if(text.length>8192)return json({error:'Request too large'},413,cors);const b=JSON.parse(text);
    if(b.action==='quote'){
-    fields(b,['action','courseId']);const quote=await repository.quote(courseId(b.courseId));if(!quote)throw new Error('Course unavailable');const r=await ready();const bdt=quote.prices?.find(p=>p.currency==='BDT');const payable=Number.isSafeInteger(bdt?.amountMinor)&&bdt.amountMinor>=1000&&bdt.amountMinor<=50000000;return json({...quote,checkoutAvailable:r.available&&payable,supportedCurrencies:r.available&&payable?['BDT']:[],provider:'sslcommerz'},200,cors);
+    fields(b,['action','courseId']);const quote=await repository.quote(courseId(b.courseId));if(!quote)throw new Error('Course unavailable');const r=await ready();const bdt=quote.prices?.find(p=>p.currency==='BDT');const payable=bdt?.provisional!==true&&Number.isSafeInteger(bdt?.amountMinor)&&bdt.amountMinor>=1000&&bdt.amountMinor<=50000000;return json({...quote,checkoutAvailable:r.available&&payable,supportedCurrencies:r.available&&payable?['BDT']:[],provider:'sslcommerz'},200,cors);
    }
    if(b.action==='my-orders'){fields(b,['action']);return json((await repository.myOrders(user.id)).map(orderView),200,cors);}
    if(b.action==='get-order'){

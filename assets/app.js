@@ -1,13 +1,13 @@
-import {learningScoreText,paymentHistoryMarkup} from './payment-view.js?v=course-launch-1';
-import {courses,getCourse,loadCourses,catalogStatus} from './courses.js?v=course-launch-1';
-import {studentCourseControls} from './student-access.js?v=course-launch-1';
-import {readStudentPrices,studentPriceSummary,hasAvailablePrice} from './student-prices.js?v=course-launch-1';
-import {safeNext} from './routes.js?v=course-launch-1';
-import {config} from './config.js?v=course-launch-1';
-import {checkoutEnabled,paymentCatalog,protectedCourse,paymentRequest} from './payments.js?v=course-launch-1';
-import {mountCaptcha} from './captcha.js?v=course-launch-1';
-import {captureRecoveryLink,mountRecoveryPage} from './recovery-page.js?v=course-launch-1';
-import {configured,client,currentUser,enroll,complete,progress,redirectUrl,friendlyError} from './auth.js?v=course-launch-1';
+import {learningScoreText,paymentHistoryMarkup} from './payment-view.js?v=academy-review-1';
+import {courses,getCourse,loadCourses,catalogStatus} from './courses.js?v=academy-review-1';
+import {studentCourseControls} from './student-access.js?v=academy-review-1';
+import {readStudentPrices,studentPriceSummary,hasAvailablePrice} from './student-prices.js?v=academy-review-1';
+import {safeNext} from './routes.js?v=academy-review-1';
+import {config} from './config.js?v=academy-review-1';
+import {checkoutEnabled,paymentCatalog,protectedCourse,paymentRequest} from './payments.js?v=academy-review-1';
+import {mountCaptcha} from './captcha.js?v=academy-review-1';
+import {captureRecoveryLink,mountRecoveryPage} from './recovery-page.js?v=academy-review-1';
+import {configured,client,currentUser,enroll,complete,progress,redirectUrl,friendlyError} from './auth.js?v=academy-review-1';
 const $=s=>document.querySelector(s);
 const isRecoveryPage=document.querySelector('#auth-form')?.dataset.mode==='reset-password';
 const recoveryCapture=isRecoveryPage?captureRecoveryLink(location,history):null;
@@ -40,7 +40,26 @@ function card(c,extra=''){return `<article class="course-card"><a class="course-
 function art(type){if(type==='ecg')return '<svg viewBox="0 0 200 120" aria-hidden="true"><path d="M0 65h45l10-12 8 20 13-55 17 87 14-53 10 13h83"/></svg>';if(type==='prevention')return '<svg viewBox="0 0 200 120" aria-hidden="true"><circle cx="100" cy="60" r="45"/><circle cx="100" cy="60" r="30"/><circle cx="100" cy="60" r="15"/><path d="M100 8v104M48 60h104"/></svg>';return '<svg viewBox="0 0 200 120" aria-hidden="true"><ellipse cx="100" cy="60" rx="44" ry="51"/><ellipse cx="100" cy="60" rx="23" ry="51"/><ellipse cx="100" cy="60" rx="44" ry="19"/><path d="M100 9v102M56 60h88"/></svg>'}
 const menu=$('#menu-toggle');if(menu){const navigation=$('#navigation');const closeMenu=()=>{menu.setAttribute('aria-expanded','false');navigation.classList.remove('is-open')};menu.onclick=()=>{const open=menu.getAttribute('aria-expanded')!=='true';menu.setAttribute('aria-expanded',String(open));navigation.classList.toggle('is-open',open)};document.addEventListener('keydown',event=>{if(event.key==='Escape'&&menu.getAttribute('aria-expanded')==='true'){closeMenu();menu.focus()}});}
 document.querySelectorAll('[data-course-grid]').forEach(el=>el.innerHTML=courses.length?courses.map(c=>card(c)).join(''):'<div class="empty"><h3>New courses are on their way.</h3><p>Check back for published learning material.</p></div>');
-if($('#course-search')){for(const category of [...new Set(courses.map(c=>c.category))]){if(!Array.from($('#category').options).some(o=>o.value===category))$('#category').add(new Option(category,category));}const render=()=>{const q=$('#course-search').value.trim().toLowerCase(),cat=$('#category').value;const result=courses.filter(c=>(!cat||c.category===cat)&&`${c.title} ${c.subtitle} ${c.description}`.toLowerCase().includes(q));$('#catalog').innerHTML=result.length?result.map(c=>card(c)).join(''):'<div class="empty"><h3>No courses found</h3><p>Try another search or category.</p></div>';$('#course-count').textContent=`${result.length} ${result.length===1?'course':'courses'} available`;};$('#course-search').addEventListener('input',render);$('#category').addEventListener('change',render);render()}
+if($('#course-search')){
+ let page=0;
+ for(const category of new Set(courses.map(c=>c.category))){
+   if(!Array.from($('#category').options).some(o=>o.value===category))$('#category').add(new Option(category,category));
+ }
+ function render(){
+   const term=$('#course-search').value.trim().toLowerCase(),category=$('#category').value;
+   const found=courses.filter(c=>(!category||c.category===category)&&[c.title,c.subtitle,c.description].join(' ').toLowerCase().includes(term));
+   if($('#sort-courses').value==='title')found.sort((a,b)=>a.title.localeCompare(b.title));
+   if($('#sort-courses').value==='duration')found.sort((a,b)=>a.minutes-b.minutes);
+   const pages=Math.max(1,Math.ceil(found.length/12));
+   page=Math.min(Math.max(page,0),pages-1);
+   $('#catalog').innerHTML=found.slice(page*12,page*12+12).map(c=>card(c)).join('')||'<p>No courses match your search.</p>';
+   $('#course-count').textContent=found.length+' courses available';
+   $('#page-number').textContent='Page '+(page+1)+' of '+pages;
+   $('#prev-page').disabled=page===0;$('#next-page').disabled=page===pages-1;
+ }
+ for(const id of ['course-search','category','sort-courses'])$('#'+id).oninput=()=>{page=0;render();};
+ $('#prev-page').onclick=()=>{page--;render();};$('#next-page').onclick=()=>{page++;render();};render();
+}
 function missing(el){el.innerHTML=catalogStatus==='unavailable'?'<div class="empty"><h1>Course information is temporarily unavailable.</h1><p>Refresh to retry. Your saved enrollment and progress have not changed.</p><a class="btn primary" href="">Try again</a> <a class="btn" href="courses.html">Browse courses</a></div>':'<div class="empty"><h1>Course not found.</h1><p>Choose an available course from the catalog.</p><a class="btn primary" href="courses.html">Browse courses ↗</a></div>'}
 if($('#course-detail')){const c=getCourse(params.get('id'));if(!c)missing($('#course-detail'));else{const controls=studentCourseControls({verified:pricingVerified&&activeAccess?.verified!==false,paid:paidCourseIds.has(c.id),access:activeAccess?.access===true},checkoutEnabled());if(paidCourseIds.has(c.id)&&!activeAccess?.access&&!hasAvailablePrice(coursePrices.get(c.id))){controls.disabled=true;controls.label=coursePrices.get(c.id)?.pendingApproval?'Locked — price awaiting approval':'Locked — prices unavailable';}document.title=c.subtitle+' | Cardiobug';$('#course-detail').innerHTML=`<section class="page-head"><a class="inline-link" href="courses.html">← All courses</a><div class="eyebrow" style="margin-top:28px">${escape(c.category)} / ${c.isSample?'Sample course':'Course'}</div><h1>${escape(c.title)}</h1><p class="lead">${escape(c.description)}</p>${c.isSample?'<div class="notice">Sample course and lessons for demonstration. Real course material is being prepared.</div>':''}</section><div class="two-col section" style="padding-top:0"><div>${c.editorialNote?`<p class="notice editorial-note">${escape(c.editorialNote)}</p>`:''}<h2>What you’ll learn</h2><ul class="lead">${c.outcomes.map(o=>`<li>${escape(o)}</li>`).join('')}</ul>${c.preview?`<section class="lesson-preview" aria-labelledby="preview-title"><span class="eyebrow">PUBLIC LESSON PREVIEW</span><h2 id="preview-title">A first look inside</h2><p>${escape(c.preview)}</p><p class="micro">This introduction is public. Full lessons and knowledge checks require authorized course access.</p></section>`:''}<h2 style="margin-top:35px">Your learning path</h2><ol class="lesson-list">${c.lessons.map((l,i)=>`<li><a href="lesson.html?course=${c.id}&lesson=${l.id}"><span>${String(i+1).padStart(2,'0')} &nbsp; ${escape(l.title)}</span><small>${l.minutes} min ↗</small></a></li>`).join('')}</ol><div class="notice">Introductory educational material. No professional accreditation, clinical qualification, or certificate is offered.</div><h3>Further reading</h3><ul class="source-list">${c.sources.map(([name,url])=>`<li><a class="inline-link" href="${escape(url)}" target="_blank" rel="noopener noreferrer">${escape(name)} ↗</a></li>`).join('')}</ul></div><aside class="sidebar content-panel"><span class="badge">${controls.badge}</span>${priceSummary(c)}<h2 style="margin-top:18px">Start with curiosity.</h2><p>${c.lessons.length} reading lessons • ${c.minutes} minutes<br>Knowledge check in every lesson<br>Beginner friendly</p><button class="btn primary" id="enroll" ${controls.disabled?'disabled':''}>${controls.label}</button>${controls.canRead?`<a class="btn" href="lesson.html?course=${c.id}&lesson=${c.lessons[0].id}">${paidCourseIds.has(c.id)?'Open first lesson':'Preview first lesson'}</a>`:`<p>Protected lessons require verified enrollment.</p><a class="btn" href="checkout.html?course=${c.id}">View checkout details ↗</a>`}<div class="notice" id="enroll-status" role="status"></div></aside></div>`;$('#enroll').onclick=async()=>{if(controls.disabled)return;if(!configured){status($('#enroll-status'),'Student accounts are awaiting activation. You can read every lesson without an account.');return}const b=$('#enroll');b.disabled=true;try{if(await enroll(c.id))location.href=`lesson.html?course=${c.id}&lesson=${c.lessons[0].id}`}catch(e){status($('#enroll-status'),friendlyError(e),true)}finally{b.disabled=false}}}}
 if($('#lesson-page')&&lessonLocked){const checkoutAvailable=pricingVerified&&activeAccess?.verified!==false&&checkoutEnabled();$('#lesson-page').innerHTML='<section class="page-head"><h1>Course access required.</h1><p>'+(!pricingVerified||activeAccess?.verified===false?'Course access could not be verified. Please retry.':checkoutAvailable?'Sign in to your enrolled account or review secure checkout.':'This lesson is locked. Sign in to an enrolled account. Checkout is currently unavailable.')+'</p><a class="btn" href="signin.html">Sign in</a>'+(checkoutAvailable?'<a class="btn primary" href="checkout.html?course='+encodeURIComponent(params.get('course')||'')+'">Open secure checkout</a>':'')+'</section>';}

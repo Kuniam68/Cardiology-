@@ -14,7 +14,7 @@ Four lessons cover the circulation route, valves and the cardiac cycle, electric
 
 ## Pricing approval
 
-The course is paid; BDT and USD price amounts are explicitly null (revision 1). This means no commercial amount has been approved. It is never represented as free or zero-priced. Student cards and details say “Awaiting owner approval”; checkout cannot create an order without an approved supported price and all activation gates.
+The course is paid. Revision 2 displays provisional prices of ৳100.00 and $5.00. Students can review either amount with billing details. The provisional status blocks order creation until an administrator records commercial approval.
 
 An authorized administrator can load this course's prices, enter independent owner-approved decimal amounts and save. Blank amounts remain unavailable. Saving a price changes neither historical order amounts nor merchant activation. USD display is independent from BDT, but SSLCOMMERZ native USD collection remains unsupported by this adapter. Do not treat currency conversion as native USD settlement.
 

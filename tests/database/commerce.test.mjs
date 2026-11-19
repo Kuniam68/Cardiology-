@@ -48,6 +48,21 @@ test('commerce database security, integrity, enrollment, scoring and recovery',a
  await t.test('refund execution claim is once-only and verified refund revokes only purchased access',async()=>{await q('select public.commerce_claim_refund($1,$2)',[ADMIN,refund.id]);await assert.rejects(q('select public.commerce_claim_refund($1,$2)',[ADMIN,refund.id]),/already attempted/);await q('select public.commerce_record_refund($1,$2,\'processing\')',[refund.id,'refund-reference']);await q('select public.commerce_record_refund($1,$2,\'refunded\')',[refund.id,'refund-reference']);await role(db,'authenticated',STUDENT);assert.equal((await q('select public.payment_has_access($1) a',[payload.id])).rows[0].a,false);assert.equal((await q('select count(*)::int n from public.lesson_progress')).rows[0].n,1);await assert.rejects(q('select public.payment_get_content($1)',[payload.id]),/access required/);});
  await t.test('ordinary free enrollment and quiz behavior remain available',async()=>{await q("insert into public.enrollments(user_id,course_id) values($1,'heart-foundations')",[STUDENT]);assert.equal((await q("select public.academy_complete_lesson('heart-foundations','chambers',2) r")).rows[0].r.saved,true);});
  await t.test('safe recovery disables checkout without deleting course/progress/payment history',async()=>{await role(db,'postgres');const before=(await q('select count(*)::int n from public.lesson_progress')).rows[0].n;await db.exec("update public.commerce_settings set live_enabled=false,merchant_approved=false,provider_environment='disabled'");assert.equal((await q('select count(*)::int n from public.lesson_progress')).rows[0].n,before);await role(db,'service_role');await assert.rejects(create(OTHER,crypto.randomUUID()),/unavailable/);});
+ await t.test('new courses have independent prices and provisional amounts cannot create orders',async()=>{
+   const id='second-paid-fixture';
+   await role(db,'authenticated',ADMIN);
+   await q('select public.save_academy_course($1,$2,false)',[id,{...payload,id}]);
+   await q('select public.academy_configure_prices($1,true,150000,2500,true)',[id]);
+   await q('select public.save_academy_course($1,$2,true)',[id,{...payload,id}]);
+   await role(db,'postgres');
+   assert.equal((await q('select amount_minor::int n from public.payment_prices where course_id=$1 and currency=$2',[payload.id,'BDT'])).rows[0].n,11000);
+   await db.exec("update public.commerce_settings set live_enabled=true,merchant_approved=true,provider_environment='sandbox'");
+   await role(db,'service_role');
+   await assert.rejects(q("select public.commerce_create_order($1,$2,'BDT',$3,'sandbox')",[STUDENT,id,crypto.randomUUID()]),/Price unavailable/);
+   await role(db,'authenticated',STUDENT);
+   await assert.rejects(q('select public.academy_configure_prices($1,true,1000,null,false)',[id]),/Administrator/);
+   await role(db,'postgres');await db.exec("update public.commerce_settings set live_enabled=false,merchant_approved=false,provider_environment='disabled'");
+ });
  await t.test('prelaunch function rollback retains private content, orders, enrollment and progress',async()=>{
   await role(db,'postgres');const before=(await q("select (select count(*) from public.commerce_orders)::int orders,(select count(*) from public.enrollments)::int enrollments,(select count(*) from public.lesson_progress)::int progress")).rows[0];
   await db.exec(readFileSync('supabase/operations/rollback-paid-course-prelaunch.sql','utf8'));
